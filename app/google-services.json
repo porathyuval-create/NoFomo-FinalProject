@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "125477883652",
+    "project_id": "nofomo-99755",
+    "storage_bucket": "nofomo-99755.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125477883652:android:f892cc38e959c7321e0a51",
+        "android_client_info": {
+          "package_name": "com.example.nofomo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9tGS5VrjQUEBrT8GRWMgpcSKkl1QIxIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
