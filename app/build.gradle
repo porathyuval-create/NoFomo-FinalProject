@@ -41,18 +41,24 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 
-    // Firebase BoM
+    // Firebase BoM - מנהל את גרסאות כל ספריות Firebase
     implementation platform("com.google.firebase:firebase-bom:34.14.0")
 
-    // Firebase Analytics
+    // Firebase Analytics - מעקב אחר אירועים ומסכים
     implementation "com.google.firebase:firebase-analytics"
 
-    // Firebase Crashlytics
+    // Firebase Crashlytics - ניטור קריסות ושגיאות
     implementation "com.google.firebase:firebase-crashlytics"
 
-    // Firebase Firestore
+    // Firebase Firestore - מסד הנתונים בענן
     implementation "com.google.firebase:firebase-firestore"
 
-    // Glide (ספריית צד שלישי - בונוס)
-    implementation "com.github.bumptech.glide:glide:4.16.0"
+    // Firebase Authentication - התחברות משתמשים
+    implementation "com.google.firebase:firebase-auth"
+
+    // Google Sign In - התחברות באמצעות חשבון גוגל
+    implementation "com.google.android.gms:play-services-auth:21.2.0"
+
+    // CircleImageView - ספריית צד שלישי להצגת תמונת פרופיל עגולה
+    implementation "de.hdodenhof:circleimageview:3.1.0"
 }

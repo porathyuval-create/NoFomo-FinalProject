@@ -1,5 +1,9 @@
 package com.example.nofomo;
+
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,28 +24,46 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     @NonNull
     @Override
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // מחבר את עיצוב השורה הבודדת שיצרנו (news_item)
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.news_item, parent, false);
         return new NewsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
-        NewsArticle article = newsList.get(position);
+        final NewsArticle article = newsList.get(position);
         holder.titleText.setText(article.getTitle());
-        holder.newsImage.setImageResource(article.getImageResource());
 
-        // הגדרת פעולה בעת לחיצה על שורה בפיד - מעבר למסך הפרטים (Intent)
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), ArticleDetailsActivity.class);
+        // המרת המחרוזת מ-Firestore חזרה לתמונה
+        Bitmap bitmap = decodeImage(article.getImageBase64());
+        if (bitmap != null) {
+            holder.newsImage.setImageBitmap(bitmap);
+        } else {
+            holder.newsImage.setImageResource(R.mipmap.ic_launcher);
+        }
 
-            // העברת הנתונים הדינמיים למסך הבא
-            intent.putExtra("title", article.getTitle());
-            intent.putExtra("summary", article.getSummary());
-            intent.putExtra("image", article.getImageResource());
-
-            v.getContext().startActivity(intent);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ArticleDetailsActivity.class);
+                intent.putExtra("title", article.getTitle());
+                intent.putExtra("summary", article.getSummary());
+                intent.putExtra("imageBase64", article.getImageBase64());
+                v.getContext().startActivity(intent);
+            }
         });
+    }
+
+    private Bitmap decodeImage(String encoded) {
+        if (encoded == null || encoded.isEmpty()) {
+            return null;
+        }
+        try {
+            byte[] bytes = Base64.decode(encoded, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
